@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,7 +48,14 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (NorthwindContext context = new NorthwindContext())
             {
-               return filter == null ? context.Set<Product>().ToList() : context.Set<Product>().Where(filter).ToList();
+                if (filter==null)
+                {
+                    return context.Set<Product>().ToList();
+                }
+                else
+                {
+                   return context.Set<Product>().Where(filter).ToList();
+                }
             }
         }
 
